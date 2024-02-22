@@ -1,0 +1,15 @@
+import sys
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+input_file = "/content/DOG.jpg"
+img = cv2.imread(input_file)
+img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+cv2_imshow(img_gray)
+img_gray_histeq = cv2.equalizeHist(img_gray)
+cv2_imshow( img_gray_histeq)
+img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+img_yuv[:,:,0] = cv2.equalizeHist(img_yuv[:,:,0])
+img_histeq = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR)
+cv2_imshow( img)
+cv2_imshow( img_histeq)
