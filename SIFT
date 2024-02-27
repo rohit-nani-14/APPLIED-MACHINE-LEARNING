@@ -1,0 +1,25 @@
+import sys
+import cv2
+import numpy as np
+
+# Load input image
+input_file = 'table.jpg'
+img = cv2.imread(input_file)
+
+# Convert image to grayscale
+img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+# Initialize SIFT detector object and extract keypoints
+sift = cv2.SIFT_create()
+keypoints = sift.detect(img_gray, None)
+
+# Draw keypoints on input image
+img_sift = np.copy(img)
+cv2.drawKeypoints(img, keypoints, img_sift, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+# Display input and output images
+from google.colab.patches import cv2_imshow
+cv2_imshow(img)
+cv2_imshow(img_sift)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
