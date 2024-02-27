@@ -1,0 +1,25 @@
+import sys
+import cv2
+import numpy as np
+
+class StarFeatureDetector(object):
+    def __init__(self):
+        self.detector = cv2.xfeatures2d.StarDetector_create()
+
+    def detect(self, img):
+        return self.detector.detect(img)
+
+if __name__ == '__main__':
+
+    input_file = 'table.jpg'
+    input_img = cv2.imread(input_file)
+
+    img_gray = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
+
+    keypoints = StarFeatureDetector().detect(input_img)
+
+    img_with_keypoints = np.copy(input_img)
+    cv2.drawKeypoints(input_img, keypoints, img_with_keypoints, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+    from google.colab.patches import cv2_imshow
+    cv2_imshow(img_with_keypoints)
